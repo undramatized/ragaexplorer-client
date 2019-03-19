@@ -1,15 +1,8 @@
 import React from "react"
-import {AutoComplete} from "antd"
+import { AutoComplete } from "antd"
 
-// const Option = AutoComplete.Option;
+const Option = AutoComplete.Option;
 // const OptGroup = AutoComplete.OptGroup;
-
-const ragalist = [
-  "Shanmugapriya",
-  "Shankarabharanam",
-  "Mohanam",
-  "Mayamalavagowla"
-]
 
 class SearchBox extends React.Component {
   constructor(props) {
@@ -19,19 +12,30 @@ class SearchBox extends React.Component {
     };
   }
 
-  onSelect = (value) => {
-    console.log('onSelect', value);
+  componentWillMount(props) {
+    this.setState({ ragalist: this.props.ragas })
+  }
+
+  onSelect = (value, option) => {
+    console.log('onSelect', value, option);
   }
 
   handleSearch = (inputVal) => {
     let results = []
     if (inputVal.length>0) {
-      results = ragalist.filter((value)=>{
-        return inputVal.toLowerCase() == value.toLowerCase().slice(0,inputVal.length)
+      results = this.state.ragalist.filter((value)=>{
+        return inputVal.toLowerCase() == value.name.toLowerCase().slice(0,inputVal.length)
       })
     }
-
-   this.setState({ dataSource: results })
+    let resultOptions = results.map((raga)=>{
+      return (
+        <Option key={raga.id} value={raga.format_name}>
+          {raga.format_name}
+        </Option>
+      )
+    })
+    console.log(resultOptions)
+    this.setState({ dataSource: resultOptions })
   }
 
   render () {

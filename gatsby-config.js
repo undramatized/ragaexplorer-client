@@ -29,6 +29,19 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        // This type will contain remote schema Query type
+        typeName: "RagaAPI",
+        // This is the field under which it's accessible
+        fieldName: "ragaapi",
+        // URL to query from
+        url: "https://ragaexplorer-graphql.herokuapp.com/",
+        // Time in seconds to refetch
+        refetchInterval: 60,
+      }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
